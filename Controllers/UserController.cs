@@ -1,0 +1,80 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AB_INVEST.Models;
+using AB_INVEST.Services;
+using Microsoft.AspNetCore.Mvc;
+
+namespace AB_INVEST.Controllers
+{
+    [Route("api/[controller]")]
+    public class UserController : ControllerBase
+    {
+        private readonly IUserService _service;
+
+        public UserController(IUserService service)
+        {
+            _service = service;
+        }
+
+        [HttpGet]
+        public ActionResult<List<UserModel>> GetAll()
+        {
+            List<UserModel> users = _service.GetAll();
+            return Ok(users);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<UserModel> GetById(int id)
+        {
+            UserModel user = _service.GetById(id);
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            return Ok(user);
+        }
+
+        [HttpPost]
+        public ActionResult<UserModel> Create([FromBody] UserModel user)
+        {
+            if (_service.EmailAlreadyInUse(user.Email))
+            {
+                return Conflict("Email already in use");
+            }
+
+            UserModel userCreated = _service.Create(user);
+
+            return Ok(userCreated);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult<UserModel> Update(int id, [FromBody] UserModel user)
+        {
+            UserModel userUpdated = _service.Update(id, user);
+
+            if (userUpdated == null)
+            {
+                return NotFound("User not found");
+            }
+
+            return Ok(userUpdated);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult<bool> Delete(int id)
+        {
+            bool deleted = _service.Delete(id);
+
+            if (!deleted)
+            {
+                return NotFound("User not found");
+            }
+
+            return Ok(deleted);
+        }
+    }
+}
