@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AB_INVEST.Context;
+using AB_INVEST.Dtos;
 using AB_INVEST.Models;
+using AB_INVEST.Repositories.Interfaces;
+using AutoMapper;
 
 namespace AB_INVEST.Repositories
 {
@@ -30,6 +33,7 @@ namespace AB_INVEST.Repositories
         {
             _context.Users.Add(user);
             _context.SaveChanges();
+
             return user;
         }
 
@@ -42,10 +46,11 @@ namespace AB_INVEST.Repositories
                 return null;
             }
 
-            userById.Name = user.Name;
-            userById.Email = user.Email;
-            userById.Phone = user.Phone;
-            userById.Password = user.Password;
+            if (user.Name != null) userById.Name = user.Name;
+            if (user.Email != null) userById.Email = user.Email;
+            if (user.Phone != null) userById.Phone = user.Phone;
+            if (user.Password != null) userById.Password = user.Password;
+            if (user.Role != null) userById.Role = user.Role;
 
             _context.Users.Update(userById);
             _context.SaveChanges();

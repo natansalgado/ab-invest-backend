@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AB_INVEST.Dtos;
 using AB_INVEST.Models;
-using AB_INVEST.Services;
+using AB_INVEST.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AB_INVEST.Controllers
@@ -19,16 +21,18 @@ namespace AB_INVEST.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<UserModel>> GetAll()
+        [Authorize(Roles = "Admin")]
+        public ActionResult<List<UserDto>> GetAll()
         {
-            List<UserModel> users = _service.GetAll();
+            List<UserDto> users = _service.GetAll();
             return Ok(users);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<UserModel> GetById(int id)
+        [Authorize(Roles = "Admin")]
+        public ActionResult<UserDto> GetById(int id)
         {
-            UserModel user = _service.GetById(id);
+            UserDto user = _service.GetById(id);
 
             if (user == null)
             {
@@ -39,7 +43,8 @@ namespace AB_INVEST.Controllers
         }
 
         [HttpPost]
-        public ActionResult<UserModel> Create([FromBody] UserModel user)
+        [AllowAnonymous]
+        public ActionResult<UserModel> Create([FromBody] CreateUserDto user)
         {
             if (_service.EmailAlreadyInUse(user.Email))
             {
@@ -52,6 +57,7 @@ namespace AB_INVEST.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public ActionResult<UserModel> Update(int id, [FromBody] UserModel user)
         {
             UserModel userUpdated = _service.Update(id, user);
@@ -65,6 +71,7 @@ namespace AB_INVEST.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public ActionResult<bool> Delete(int id)
         {
             bool deleted = _service.Delete(id);

@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AB_INVEST.Dtos;
 using AB_INVEST.Models;
 
-namespace AB_INVEST.Services
+namespace AB_INVEST.Repositories.Interfaces
 {
-    public interface IUserService
+    public interface IUserRepository
     {
         List<UserModel> GetAll();
         UserModel GetById(int id);

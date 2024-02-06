@@ -17,6 +17,7 @@ namespace AB_INVEST.Context.Maps
             builder.Property(x => x.Email).IsRequired().HasMaxLength(150);
             builder.Property(x => x.Phone).IsRequired().HasMaxLength(15);
             builder.Property(x => x.Password).IsRequired();
+            builder.Property(x => x.Role).IsRequired();
 
             builder.HasIndex(x => x.Email).IsUnique();
         }
