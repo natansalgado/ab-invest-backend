@@ -44,23 +44,23 @@ namespace AB_INVEST.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult<UserModel> Create([FromBody] CreateUserDto user)
+        public ActionResult<UserDto> Create([FromBody] CreateUserDto user)
         {
             if (_service.EmailAlreadyInUse(user.Email))
             {
                 return Conflict("Email already in use");
             }
 
-            UserModel userCreated = _service.Create(user);
+            UserDto userCreated = _service.Create(user);
 
             return Ok(userCreated);
         }
 
         [HttpPut("{id}")]
         [Authorize]
-        public ActionResult<UserModel> Update(int id, [FromBody] UserModel user)
+        public ActionResult<UserDto> Update(int id, [FromBody] UserModel user)
         {
-            UserModel userUpdated = _service.Update(id, user);
+            UserDto userUpdated = _service.Update(id, user);
 
             if (userUpdated == null)
             {

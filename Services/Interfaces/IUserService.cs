@@ -11,8 +11,8 @@ namespace AB_INVEST.Services.Interfaces
     {
         List<UserDto> GetAll();
         UserDto GetById(int id);
-        UserModel Create(CreateUserDto user);
-        UserModel Update(int id, UserModel user);
+        UserDto Create(CreateUserDto user);
+        UserDto Update(int id, UserModel user);
         bool Delete(int id);
 
         bool EmailAlreadyInUse(string email);

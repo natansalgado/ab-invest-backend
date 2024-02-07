@@ -29,6 +29,11 @@ namespace AB_INVEST.Repositories
             return _context.Users.Find(id);
         }
 
+        public UserModel GetByEmail(string email)
+        {
+            return _context.Users.Where(x => x.Email.ToLower() == email.ToLower()).FirstOrDefault();
+        }
+
         public UserModel Create(UserModel user)
         {
             _context.Users.Add(user);
@@ -75,7 +80,7 @@ namespace AB_INVEST.Repositories
 
         public bool EmailAlreadyInUse(string email)
         {
-            return _context.Users.Any(x => x.Email == email);
+            return _context.Users.Any(x => x.Email.ToLower() == email.ToLower());
         }
     }
 }

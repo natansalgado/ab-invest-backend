@@ -16,18 +16,27 @@ namespace AB_INVEST.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly IAuthRepository _repository;
+        private readonly IUserRepository _repository;
         private readonly IConfiguration _configuration;
+        private readonly IPasswordHashSevice _passwordHashSevice;
 
-        public AuthService(IAuthRepository repository, IConfiguration configuration)
+        public AuthService(IUserRepository repository, IConfiguration configuration, IPasswordHashSevice passwordHashSevice)
         {
             _repository = repository;
             _configuration = configuration;
+            _passwordHashSevice = passwordHashSevice;
         }
 
         public UserModel GetByCredentials(AuthLoginDto login)
         {
-            return _repository.GetByCredentials(login);
+            UserModel user = _repository.GetByEmail(login.Email);
+
+            if (user != null && _passwordHashSevice.VerifyPassword(login.Password, user.Password))
+            {
+                return user;
+            }
+
+            return null;
         }
 
         public string GenerateToken(UserModel user)

@@ -11,6 +11,7 @@ namespace AB_INVEST.Repositories.Interfaces
     {
         List<UserModel> GetAll();
         UserModel GetById(int id);
+        UserModel GetByEmail(string email);
         UserModel Create(UserModel user);
         UserModel Update(int id, UserModel user);
         bool Delete(int id);

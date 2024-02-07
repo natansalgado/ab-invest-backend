@@ -13,11 +13,13 @@ namespace AB_INVEST.Services
     {
         private readonly IUserRepository _repository;
         private readonly IUserMappingService _mappingService;
+        private readonly IPasswordHashSevice _passwordHashService;
 
-        public UserService(IUserRepository repository, IUserMappingService mappingService)
+        public UserService(IUserRepository repository, IUserMappingService mappingService, IPasswordHashSevice passwordHashService)
         {
             _repository = repository;
             _mappingService = mappingService;
+            _passwordHashService = passwordHashService;
         }
 
         public List<UserDto> GetAll()
@@ -32,15 +34,24 @@ namespace AB_INVEST.Services
             return _mappingService.ModelToDto(user);
         }
 
-        public UserModel Create(CreateUserDto user)
+        public UserDto Create(CreateUserDto user)
         {
-            UserModel userModel = _mappingService.CreateDtoToModel(user);
-            return _repository.Create(userModel);
+            user.Password = _passwordHashService.HashPassword(user.Password);
+
+            UserModel userModel = _repository.Create(_mappingService.CreateDtoToModel(user));
+
+            UserDto userDto = _mappingService.ModelToDto(userModel);
+
+            return userDto;
         }
 
-        public UserModel Update(int id, UserModel user)
+        public UserDto Update(int id, UserModel user)
         {
-            return _repository.Update(id, user);
+            user.Password = _passwordHashService.HashPassword(user.Password);
+
+            UserDto userDto = _mappingService.ModelToDto(_repository.Update(id, user));
+
+            return userDto;
         }
 
         public bool Delete(int id)
