@@ -14,5 +14,7 @@ namespace AB_INVEST.Models
         public string Phone { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
+        
+        public AccountModel Account { get; set; }
     }
 }

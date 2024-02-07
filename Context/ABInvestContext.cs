@@ -13,6 +13,7 @@ namespace AB_INVEST.Context
         public ABInvestContext(DbContextOptions<ABInvestContext> options) : base(options) { }
 
         public DbSet<UserModel> Users { get; set; }
+        public DbSet<AccountModel> Accounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

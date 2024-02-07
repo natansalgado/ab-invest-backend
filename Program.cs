@@ -20,8 +20,10 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserMappingService, UserMappingService>();
 builder.Services.AddScoped<IPasswordHashSevice, PasswordHashSevice>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
 builder.Services.AddCors();
 builder.Services.AddControllers();

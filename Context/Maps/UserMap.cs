@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AB_INVEST.Context.Maps
 {
-    public class UserMap: IEntityTypeConfiguration<UserModel>
+    public class UserMap : IEntityTypeConfiguration<UserModel>
     {
         public void Configure(EntityTypeBuilder<UserModel> builder)
         {
