@@ -4,6 +4,7 @@ using AB_INVEST.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AB_INVEST.Migrations
 {
     [DbContext(typeof(ABInvestContext))]
-    partial class ABInvestContextModelSnapshot : ModelSnapshot
+    [Migration("20240208155144_CreateTransfersTable")]
+    partial class CreateTransfersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +33,7 @@ namespace AB_INVEST.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("AccountKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Balance")
                         .ValueGeneratedOnAdd()
@@ -42,10 +44,6 @@ namespace AB_INVEST.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AccountKey")
-                        .IsUnique()
-                        .HasFilter("[AccountKey] IS NOT NULL");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -64,7 +62,7 @@ namespace AB_INVEST.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 2, 8, 14, 21, 30, 462, DateTimeKind.Local).AddTicks(4972));
+                        .HasDefaultValue(new DateTime(2024, 2, 8, 12, 51, 44, 816, DateTimeKind.Local).AddTicks(6515));
 
                     b.Property<int>("ReceiverAccountId")
                         .HasColumnType("int");

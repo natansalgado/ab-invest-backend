@@ -22,6 +22,17 @@ namespace AB_INVEST.Services
             return _repository.FindByKey(key);
         }
 
+        public void Create(int userId)
+        {
+            AccountModel account = new()
+            {
+                UserId = userId,
+                AccountKey = Guid.NewGuid().ToString()
+            };
+
+            _repository.Create(account);
+        }
+
         public bool UpdateAccountKey(int id, string key)
         {
             AccountModel accountExists = _repository.FindById(id);
@@ -30,6 +41,16 @@ namespace AB_INVEST.Services
                 return false;
 
             return _repository.UpdateAccountKey(id, key);
+        }
+
+        public bool AddToBalance(int id, decimal value)
+        {
+            return _repository.AddToBalance(id, value);
+        }
+
+        public bool RemoveFromBalance(int id, decimal value)
+        {
+            return _repository.RemoveFromBalance(id, value);
         }
     }
 }

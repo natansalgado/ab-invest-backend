@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AB_INVEST.Context;
 using AB_INVEST.Models;
 using AB_INVEST.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace AB_INVEST.Repositories
 {
@@ -24,7 +25,7 @@ namespace AB_INVEST.Repositories
 
         public AccountModel FindByKey(string key)
         {
-            return _context.Accounts.Where(x => x.AccountKey == key).FirstOrDefault();
+            return _context.Accounts.Include(x => x.User).FirstOrDefault(x => x.AccountKey == key);
         }
 
         public AccountModel Create(AccountModel account)
@@ -43,6 +44,28 @@ namespace AB_INVEST.Repositories
 
             _context.Accounts.Update(account);
             _context.SaveChanges();
+
+            return true;
+        }
+
+        public bool AddToBalance(int id, decimal value)
+        {
+            AccountModel account = FindById(id);
+
+            account.Balance += value;
+
+            _context.Accounts.Update(account);
+
+            return true;
+        }
+
+        public bool RemoveFromBalance(int id, decimal value)
+        {
+            AccountModel account = FindById(id);
+
+            account.Balance -= value;
+
+            _context.Accounts.Update(account);
 
             return true;
         }

@@ -1,5 +1,7 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using AB_INVEST.Context;
+using AB_INVEST.Models;
 using AB_INVEST.Repositories;
 using AB_INVEST.Repositories.Interfaces;
 using AB_INVEST.Services;
@@ -21,12 +23,19 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserMappingService, UserMappingService>();
 builder.Services.AddScoped<IPasswordHashSevice, PasswordHashSevice>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
 builder.Services.AddCors();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
