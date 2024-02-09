@@ -17,6 +17,11 @@ namespace AB_INVEST.Services
             _repository = repository;
         }
 
+        public AccountModel FindById(int id)
+        {
+            return _repository.FindById(id);
+        }
+
         public AccountModel FindByKey(string key)
         {
             return _repository.FindByKey(key);

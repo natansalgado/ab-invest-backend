@@ -16,6 +16,8 @@ namespace AB_INVEST.Context
         public DbSet<AccountModel> Accounts { get; set; }
         public DbSet<TransferModel> Transfers { get; set; }
         public DbSet<InvestmentModel> Investments { get; set; }
+        public DbSet<UserInvestmentModel> UsersInvestments { get; set; }
+        public DbSet<WithdrawModel> Withdraws { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +25,8 @@ namespace AB_INVEST.Context
             modelBuilder.ApplyConfiguration(new AccountMap());
             modelBuilder.ApplyConfiguration(new TransferMap());
             modelBuilder.ApplyConfiguration(new InvestmentMap());
+            modelBuilder.ApplyConfiguration(new UserInvestmentMap());
+            modelBuilder.ApplyConfiguration(new WithdrawMap());
 
             base.OnModelCreating(modelBuilder);
         }

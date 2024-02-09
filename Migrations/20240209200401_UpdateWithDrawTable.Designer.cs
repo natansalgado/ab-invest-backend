@@ -4,6 +4,7 @@ using AB_INVEST.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AB_INVEST.Migrations
 {
     [DbContext(typeof(ABInvestContext))]
-    partial class ABInvestContextModelSnapshot : ModelSnapshot
+    [Migration("20240209200401_UpdateWithDrawTable")]
+    partial class UpdateWithDrawTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,7 +93,9 @@ namespace AB_INVEST.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 2, 9, 17, 4, 0, 948, DateTimeKind.Local).AddTicks(9850));
 
                     b.Property<int>("ReceiverAccountId")
                         .HasColumnType("int");
@@ -135,7 +139,9 @@ namespace AB_INVEST.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 2, 9, 17, 4, 0, 949, DateTimeKind.Local).AddTicks(2006));
 
                     b.HasKey("Id");
 
@@ -145,7 +151,7 @@ namespace AB_INVEST.Migrations
 
                     b.HasIndex("InvestmentId");
 
-                    b.ToTable("UsersInvestments");
+                    b.ToTable("UserInvestments");
                 });
 
             modelBuilder.Entity("AB_INVEST.Models.UserModel", b =>
@@ -214,7 +220,9 @@ namespace AB_INVEST.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("WithdrawDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 2, 9, 17, 4, 0, 949, DateTimeKind.Local).AddTicks(3974));
 
                     b.HasKey("Id");
 

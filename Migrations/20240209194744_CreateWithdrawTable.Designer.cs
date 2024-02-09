@@ -4,6 +4,7 @@ using AB_INVEST.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AB_INVEST.Migrations
 {
     [DbContext(typeof(ABInvestContext))]
-    partial class ABInvestContextModelSnapshot : ModelSnapshot
+    [Migration("20240209194744_CreateWithdrawTable")]
+    partial class CreateWithdrawTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,7 +93,9 @@ namespace AB_INVEST.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 2, 9, 16, 47, 44, 444, DateTimeKind.Local).AddTicks(8186));
 
                     b.Property<int>("ReceiverAccountId")
                         .HasColumnType("int");
@@ -125,6 +129,10 @@ namespace AB_INVEST.Migrations
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -135,7 +143,9 @@ namespace AB_INVEST.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 2, 9, 16, 47, 44, 445, DateTimeKind.Local).AddTicks(472));
 
                     b.HasKey("Id");
 
@@ -145,7 +155,9 @@ namespace AB_INVEST.Migrations
 
                     b.HasIndex("InvestmentId");
 
-                    b.ToTable("UsersInvestments");
+                    b.ToTable("UserInvestments");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("UserInvestmentModel");
                 });
 
             modelBuilder.Entity("AB_INVEST.Models.UserModel", b =>
@@ -189,42 +201,14 @@ namespace AB_INVEST.Migrations
 
             modelBuilder.Entity("AB_INVEST.Models.WithdrawModel", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Balance")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("InitialValue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("InvestmentId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.HasBaseType("AB_INVEST.Models.UserInvestmentModel");
 
                     b.Property<DateTime>("WithdrawDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2024, 2, 9, 16, 47, 44, 445, DateTimeKind.Local).AddTicks(2338));
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("Id");
-
-                    b.HasIndex("InvestmentId");
-
-                    b.ToTable("Withdraws");
+                    b.HasDiscriminator().HasValue("WithdrawModel");
                 });
 
             modelBuilder.Entity("AB_INVEST.Models.AccountModel", b =>
@@ -258,25 +242,6 @@ namespace AB_INVEST.Migrations
                 });
 
             modelBuilder.Entity("AB_INVEST.Models.UserInvestmentModel", b =>
-                {
-                    b.HasOne("AB_INVEST.Models.AccountModel", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("AB_INVEST.Models.InvestmentModel", "Investment")
-                        .WithMany()
-                        .HasForeignKey("InvestmentId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Investment");
-                });
-
-            modelBuilder.Entity("AB_INVEST.Models.WithdrawModel", b =>
                 {
                     b.HasOne("AB_INVEST.Models.AccountModel", "Account")
                         .WithMany()

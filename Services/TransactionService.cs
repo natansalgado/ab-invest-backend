@@ -33,7 +33,7 @@ namespace AB_INVEST.Services
             {
                 ReceiverName = account.User.Name,
                 ReceiverKey = account.AccountKey,
-                Value = transferDto.Value
+                Value = transferDto.Value,
             };
         }
 
@@ -56,7 +56,8 @@ namespace AB_INVEST.Services
             {
                 SenderAccount = senderAccount,
                 ReceiverAccount = receiverAccount,
-                Value = value
+                Value = value,
+                Date = DateTime.Now
             };
 
             TransferModel transferDone = _repository.Transfer(transfer);

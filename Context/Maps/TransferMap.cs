@@ -15,7 +15,7 @@ namespace AB_INVEST.Context.Maps
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Value).IsRequired().HasColumnType("decimal(18,2)");
-            builder.Property(x => x.Date).HasDefaultValue(DateTime.Now);
+            builder.Property(x => x.Date).IsRequired();
             builder.Property(x => x.SenderAccountId).IsRequired();
             builder.Property(x => x.ReceiverAccountId).IsRequired();
 

@@ -25,11 +25,13 @@ builder.Services.AddScoped<IPasswordHashSevice, PasswordHashSevice>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IInvestmentService, InvestmentService>();
+builder.Services.AddScoped<IUserInvestmentService, UserInvestmentService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IInvestmentRepository, InvestmentRepository>();
+builder.Services.AddScoped<IUserInvestmentRepository, UserInvestmentRepository>();
 
 builder.Services.AddCors();
 builder.Services.AddControllers()
