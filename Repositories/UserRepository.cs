@@ -52,7 +52,7 @@ namespace AB_INVEST.Repositories
             }
 
             if (user.Name != null) userById.Name = user.Name;
-            if (user.Email != null) userById.Email = user.Email;
+            if (user.Email != null) userById.Email = user.Email.ToLower();
             if (user.Phone != null) userById.Phone = user.Phone;
             if (user.Password != null) userById.Password = user.Password;
             if (user.Role != null) userById.Role = user.Role;

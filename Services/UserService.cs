@@ -42,6 +42,7 @@ namespace AB_INVEST.Services
         public UserDto Create(CreateUserDto user)
         {
             user.Password = _passwordHashService.HashPassword(user.Password);
+            user.Email = user.Email.ToLower();
 
             UserModel userModel = _repository.Create(_mappingService.CreateDtoToModel(user));
 
