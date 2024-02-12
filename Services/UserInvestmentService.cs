@@ -18,7 +18,8 @@ namespace AB_INVEST.Services
 
         public UserInvestmentService(IUserInvestmentRepository repository,
                                      IAccountService accountService,
-                                     IInvestmentService investmentService)
+                                     IInvestmentService investmentService,
+                                     ITransactionService transactionService)
         {
             _repository = repository;
             _accountService = accountService;
@@ -62,17 +63,33 @@ namespace AB_INVEST.Services
             return _repository.CreateUserInvestment(userInvestment);
         }
 
-        public WithdrawModel WithDraw(int id)
+        public UserInvestmentModel Update(int id, UserInvestmentModel userInvestment)
+        {
+            UserInvestmentModel userInvestmentById = FindById(id);
+
+            if (userInvestmentById == null)
+                return null;
+
+            if (userInvestment.Balance > 0) userInvestmentById.Balance = userInvestment.Balance;
+
+            return _repository.Update(userInvestmentById);
+        }
+
+        public WithdrawModel WithDraw(int id, decimal? value)
         {
             UserInvestmentModel userInvestment = FindById(id);
 
             CheckWithDraw(userInvestment);
 
-            WithdrawModel withdrawModel = ConvertToWithdraw(userInvestment);
+            decimal withdrewValue = (decimal)(value != null ? value : userInvestment.Balance);
+
+            WithdrawModel withdrawModel = ConvertToWithdraw(userInvestment, withdrewValue, value == null);
 
             WithdrawModel withdraw = _repository.CreateWithdraw(withdrawModel);
 
-            _repository.Delete(userInvestment);
+            _accountService.AddToBalance(userInvestment.AccountId, userInvestment.Balance);
+
+            CheckIfDeleteUserInvestment(withdraw, userInvestment);
 
             return withdraw;
         }
@@ -94,8 +111,13 @@ namespace AB_INVEST.Services
                 throw new ABException(400, "Saldo insuficiente");
         }
 
-        private static void CheckWithDraw(UserInvestmentModel userInvestment)
+        private void CheckWithDraw(UserInvestmentModel userInvestment)
         {
+            AccountModel account = _accountService.FindById(userInvestment.AccountId);
+
+            if (account == null)
+                throw new ABException(404, "Conta não encontrada");
+
             if (userInvestment == null)
                 throw new ABException(404, "Investimento do usuário não encontrado");
 
@@ -113,7 +135,7 @@ namespace AB_INVEST.Services
             };
         }
 
-        private static WithdrawModel ConvertToWithdraw(UserInvestmentModel userInvestment)
+        private static WithdrawModel ConvertToWithdraw(UserInvestmentModel userInvestment, decimal withdreValue, bool withdrawAll)
         {
             return new WithdrawModel()
             {
@@ -121,10 +143,20 @@ namespace AB_INVEST.Services
                 InvestmentId = userInvestment.InvestmentId,
                 InitialValue = userInvestment.InitialValue,
                 Balance = userInvestment.Balance,
+                WithdrewAll = withdrawAll,
+                WithdrewValue = withdreValue,
                 StartDate = userInvestment.StartDate,
                 EndDate = userInvestment.EndDate,
                 WithdrawDate = DateTime.Now
             };
+        }
+
+        private void CheckIfDeleteUserInvestment(WithdrawModel withdraw, UserInvestmentModel userInvestment)
+        {
+            if (withdraw.Balance == withdraw.WithdrewValue || withdraw.Balance - withdraw.WithdrewValue <= 0)
+            {
+                _repository.Delete(userInvestment);
+            }
         }
     }
 }

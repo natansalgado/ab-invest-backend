@@ -69,12 +69,30 @@ namespace AB_INVEST.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public ActionResult<WithdrawModel> Withdraw(int id)
+        [HttpDelete("WithdrawAll/{id}")]
+        public ActionResult<WithdrawModel> WithdrawAll(int id)
         {
             try
             {
-                WithdrawModel withdraw = _service.WithDraw(id);
+                WithdrawModel withdraw = _service.WithDraw(id, null);
+                return Ok(withdraw);
+            }
+            catch (ABException ex)
+            {
+                return StatusCode(ex.StatusCode, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("WithdrawValue/{id}/{value}")]
+        public ActionResult<WithdrawModel> WithdrawValue(int id, decimal value)
+        {
+            try
+            {
+                WithdrawModel withdraw = _service.WithDraw(id, value);
                 return Ok(withdraw);
             }
             catch (ABException ex)

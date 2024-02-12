@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json.Serialization;
 using AB_INVEST.Context;
+using AB_INVEST.Jobs;
 using AB_INVEST.Models;
 using AB_INVEST.Repositories;
 using AB_INVEST.Repositories.Interfaces;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Quartz;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,6 +86,19 @@ builder.Services.AddAuthentication(x =>
         ValidateAudience = false
     };
 });
+
+builder.Services.AddQuartz(q =>
+{
+    var jobKey = new JobKey("CheckUsersInvestments");
+    q.AddJob<CheckUsersInvestments>(opts => opts.WithIdentity(jobKey));
+
+    q.AddTrigger(opts => opts
+        .ForJob(jobKey)
+        .WithIdentity("CheckUsersInvestments-trigger")
+        .WithCronSchedule("0 * * ? * *")
+    );
+});
+builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
 var app = builder.Build();
 

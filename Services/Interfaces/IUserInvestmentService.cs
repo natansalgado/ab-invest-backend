@@ -13,6 +13,7 @@ namespace AB_INVEST.Services.Interfaces
         UserInvestmentModel FindById(int id);
         List<UserInvestmentModel> FindByAccountId(int accountId);
         UserInvestmentModel Create(UserInvestmentDto userInvestmentDto);
-        WithdrawModel WithDraw(int id);
+        UserInvestmentModel Update(int id, UserInvestmentModel userInvestmentModel);
+        WithdrawModel WithDraw(int id, decimal? value);
     }
 }

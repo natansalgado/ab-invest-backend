@@ -13,6 +13,7 @@ namespace AB_INVEST.Repositories.Interfaces
         List<UserInvestmentModel> FindByAccountId(int accountId);
         UserInvestmentModel CreateUserInvestment(UserInvestmentModel userInvestment);
         WithdrawModel CreateWithdraw(WithdrawModel withdrawModel);
+        UserInvestmentModel Update(UserInvestmentModel userInvestment);
         void Delete(UserInvestmentModel userInvestment);
     }
 }

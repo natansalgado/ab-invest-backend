@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AB_INVEST.Context;
 using AB_INVEST.Models;
 using AB_INVEST.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace AB_INVEST.Repositories
 {
@@ -19,7 +20,7 @@ namespace AB_INVEST.Repositories
 
         public List<UserInvestmentModel> FindAll()
         {
-            return _context.UsersInvestments.ToList();
+            return _context.UsersInvestments.Include(x => x.Investment).ToList();
         }
 
         public UserInvestmentModel FindById(int id)
@@ -46,6 +47,14 @@ namespace AB_INVEST.Repositories
             _context.SaveChanges();
 
             return withdrawModel;
+        }
+
+        public UserInvestmentModel Update(UserInvestmentModel userInvestment)
+        {
+            _context.UsersInvestments.Update(userInvestment);
+            _context.SaveChanges();
+
+            return userInvestment;
         }
 
         public void Delete(UserInvestmentModel userInvestment)

@@ -10,6 +10,8 @@ namespace AB_INVEST.Models
         public int Id { get; set; }
         public decimal InitialValue { get; set; }
         public decimal Balance { get; set; }
+        public bool WithdrewAll { get; set; }
+        public decimal WithdrewValue { get; set; }
         public int AccountId { get; set; }
         public int InvestmentId { get; set; }
         public DateTime StartDate { get; set; }
