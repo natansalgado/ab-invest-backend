@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AB_INVEST.Dtos;
 using AB_INVEST.Models;
@@ -27,11 +28,25 @@ namespace AB_INVEST.Controllers
             UserModel user = _service.GetByCredentials(login);
 
             if (user == null)
-                return NotFound("Email or Password do not correspond");
+                return NotFound("Email ou senha não corresponde");
 
             string token = _service.GenerateToken(user);
 
             return Ok(new { token });
+        }
+
+        [HttpGet("profile")]
+        [Authorize]
+        public ActionResult<string> GetUserId()
+        {
+            var id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var name = User.FindFirst(ClaimTypes.Name).Value;
+            var role = User.FindFirst(ClaimTypes.Role).Value;
+
+            if (id == null)
+                return Unauthorized("Erro ao tentar acessar o token");
+
+            return Ok(new { id, name, role });
         }
     }
 }

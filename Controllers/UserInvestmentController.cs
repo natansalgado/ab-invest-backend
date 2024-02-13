@@ -6,12 +6,14 @@ using AB_INVEST.Dtos;
 using AB_INVEST.Exceptions;
 using AB_INVEST.Models;
 using AB_INVEST.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace AB_INVEST.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public class UserInvestmentController : ControllerBase
     {
         private readonly IUserInvestmentService _service;

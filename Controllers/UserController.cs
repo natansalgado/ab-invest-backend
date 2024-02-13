@@ -35,7 +35,7 @@ namespace AB_INVEST.Controllers
             UserDto user = _service.GetById(id);
 
             if (user == null)
-                return NotFound("User not found");
+                return NotFound("Usuário não encontrado");
 
             return Ok(user);
         }
@@ -45,7 +45,7 @@ namespace AB_INVEST.Controllers
         public ActionResult<UserDto> Create([FromBody] CreateUserDto user)
         {
             if (_service.EmailAlreadyInUse(user.Email))
-                return Conflict("Email already in use");
+                return Conflict("Esse email já está sendo utilizado");
 
             UserDto userCreated = _service.Create(user);
 
@@ -59,7 +59,7 @@ namespace AB_INVEST.Controllers
             UserDto userUpdated = _service.Update(id, user);
 
             if (userUpdated == null)
-                return NotFound("User not found");
+                return NotFound("Usuário não encontrado");
 
             return Ok(userUpdated);
         }
@@ -71,7 +71,7 @@ namespace AB_INVEST.Controllers
             bool deleted = _service.Delete(id); 
 
             if (!deleted)
-                return NotFound("User not found");
+                return NotFound("Usuário não encontrado");
 
 
             return Ok(deleted);

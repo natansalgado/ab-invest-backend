@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AB_INVEST.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _service;
@@ -20,7 +21,6 @@ namespace AB_INVEST.Controllers
         }
 
         [HttpPut("{id}/{key}")]
-        [Authorize]
         public ActionResult<bool> UpdateAccountKey(int id, string key)
         {
             AccountModel keyAlreadyInUse = _service.FindByKey(key);
@@ -34,6 +34,17 @@ namespace AB_INVEST.Controllers
                 return NotFound(false);
 
             return Ok(true);
+        }
+
+        [HttpGet("userid/{userId}")]
+        public ActionResult<AccountModel> GetByUserId(int userId)
+        {
+            AccountModel account = _service.FindByUserId(userId);
+
+            if (account == null)
+                return NotFound("Conta não encontrada");
+
+            return Ok(account);
         }
     }
 }

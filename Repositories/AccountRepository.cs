@@ -23,6 +23,11 @@ namespace AB_INVEST.Repositories
             return _context.Accounts.Find(id);
         }
 
+        public AccountModel FindByUserId(int userId)
+        {
+            return _context.Accounts.Where(x => x.UserId == userId).FirstOrDefault();
+        }
+
         public AccountModel FindByKey(string key)
         {
             return _context.Accounts.Include(x => x.User).FirstOrDefault(x => x.AccountKey == key);
