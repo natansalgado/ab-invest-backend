@@ -94,11 +94,17 @@ namespace AB_INVEST.Services
             return withdraw;
         }
 
-        private static void CheckCreate(AccountModel account,
+        private void CheckCreate(AccountModel account,
                                         InvestmentModel investment,
                                         UserInvestmentDto userInvestmentDto)
         {
-            if (account == null)
+            List<UserInvestmentModel> userInvestments = _repository.FindByAccountId(account.Id);
+            UserInvestmentModel reapetedUserInvestment = userInvestments.Find(x => x.Name == userInvestmentDto.Name);
+
+            if (reapetedUserInvestment != null)
+                throw new ABException(409, "Você já usou esse nome em outro investimento");
+
+                if (account == null)
                 throw new ABException(404, "Conta não encontrada");
 
             if (investment == null)
@@ -129,6 +135,7 @@ namespace AB_INVEST.Services
         {
             return new UserInvestmentModel()
             {
+                Name = userInvestmentDto.Name,
                 AccountId = userInvestmentDto.AccountId,
                 InvestmentId = userInvestmentDto.InvestmentId,
                 InitialValue = userInvestmentDto.InitialValue

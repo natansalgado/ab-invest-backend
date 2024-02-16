@@ -8,6 +8,7 @@ namespace AB_INVEST.Models
     public class UserInvestmentModel
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public decimal InitialValue { get; set; }
         public decimal Balance { get; set; }
         public int AccountId { get; set; }
