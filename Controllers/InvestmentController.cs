@@ -20,7 +20,6 @@ namespace AB_INVEST.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public ActionResult<List<InvestmentModel>> FindAll()
         {
             List<InvestmentModel> investments = _service.FindAll();
@@ -28,7 +27,6 @@ namespace AB_INVEST.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
         public ActionResult<InvestmentModel> FindById(int id)
         {
             InvestmentModel investment = _service.FindById(id);
