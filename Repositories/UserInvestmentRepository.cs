@@ -30,7 +30,8 @@ namespace AB_INVEST.Repositories
 
         public List<UserInvestmentModel> FindByAccountId(int accountId)
         {
-            return _context.UsersInvestments.Where(x => x.AccountId == accountId).Include(x => x.Investment).ToList();
+            return _context.UsersInvestments.Where(x => x.AccountId == accountId)
+                .OrderByDescending(x => x.StartDate).Include(x => x.Investment).ToList();
         }
 
         public UserInvestmentModel CreateUserInvestment(UserInvestmentModel userInvestment)

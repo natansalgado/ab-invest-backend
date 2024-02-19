@@ -19,7 +19,7 @@ namespace AB_INVEST.Repositories
 
         public List<InvestmentModel> FindAll()
         {
-            return _context.Investments.ToList();
+            return _context.Investments.OrderBy(x => x.AnnualPercentage).ToList();
         }
 
         public InvestmentModel FindById(int id)

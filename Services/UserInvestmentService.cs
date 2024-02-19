@@ -16,10 +16,7 @@ namespace AB_INVEST.Services
         private readonly IAccountService _accountService;
         private readonly IInvestmentService _investmentService;
 
-        public UserInvestmentService(IUserInvestmentRepository repository,
-                                     IAccountService accountService,
-                                     IInvestmentService investmentService,
-                                     ITransactionService transactionService)
+        public UserInvestmentService(IUserInvestmentRepository repository, IAccountService accountService, IInvestmentService investmentService)
         {
             _repository = repository;
             _accountService = accountService;
@@ -104,7 +101,7 @@ namespace AB_INVEST.Services
             if (reapetedUserInvestment != null)
                 throw new ABException(409, "Você já usou esse nome em outro investimento");
 
-                if (account == null)
+            if (account == null)
                 throw new ABException(404, "Conta não encontrada");
 
             if (investment == null)
