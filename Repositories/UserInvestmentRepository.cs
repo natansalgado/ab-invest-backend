@@ -25,7 +25,7 @@ namespace AB_INVEST.Repositories
 
         public UserInvestmentModel FindById(int id)
         {
-            return _context.UsersInvestments.Find(id);
+            return _context.UsersInvestments.Include(x => x.Investment).FirstOrDefault(x => x.Id == id);
         }
 
         public List<UserInvestmentModel> FindByAccountId(int accountId)

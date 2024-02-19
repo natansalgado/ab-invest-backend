@@ -71,6 +71,24 @@ namespace AB_INVEST.Controllers
             }
         }
 
+        [HttpPut("AddBalance/{id}/{value}")]
+        public ActionResult<UserInvestmentModel> AddBalance(int id, decimal value)
+        {
+            try
+            {
+                UserInvestmentModel userInvestment = _service.AddBalance(id, value);
+                return Ok(userInvestment);
+            }
+            catch (ABException ex)
+            {
+                return StatusCode(ex.StatusCode, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpDelete("WithdrawAll/{id}")]
         public ActionResult<WithdrawModel> WithdrawAll(int id)
         {

@@ -60,6 +60,21 @@ namespace AB_INVEST.Services
             return _repository.CreateUserInvestment(userInvestment);
         }
 
+        public UserInvestmentModel AddBalance(int id, decimal value)
+        {
+            UserInvestmentModel userInvestment = FindById(id)
+                ?? throw new ABException(404, "Não foi possível encontrar seu investimento");
+            
+            AccountModel account = _accountService.FindById(userInvestment.AccountId)
+                ?? throw new ABException(404, "Não foi possível encontrar sua conta bancária");
+            
+            if (account.Balance < value) throw new ABException(400, "Saldo insuficiente");
+
+            _accountService.RemoveFromBalance(userInvestment.AccountId, value);
+            userInvestment.Balance += value;
+            return _repository.Update(userInvestment);
+        }
+
         public UserInvestmentModel Update(int id, UserInvestmentModel userInvestment)
         {
             UserInvestmentModel userInvestmentById = FindById(id);
