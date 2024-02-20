@@ -8,8 +8,8 @@ namespace AB_INVEST.Services.Interfaces
 {
     public interface IInvestmentService
     {
-        List<InvestmentModel> FindAll();
-        InvestmentModel FindById(int id);
+        List<InvestmentModel> GetAll();
+        InvestmentModel GetById(int id);
         InvestmentModel Create(InvestmentModel investment);
         InvestmentModel Update(int id, InvestmentModel investment);
         bool Delete(int id);

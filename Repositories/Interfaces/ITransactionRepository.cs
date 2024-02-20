@@ -9,5 +9,6 @@ namespace AB_INVEST.Repositories.Interfaces
     public interface ITransactionRepository
     {
         TransferModel Transfer(TransferModel transfer);
+        DepositModel Deposit(DepositModel deposit);
     }
 }

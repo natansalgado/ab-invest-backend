@@ -23,7 +23,7 @@ namespace AB_INVEST.Controllers
         [HttpPut("{id}/{key}")]
         public ActionResult<bool> UpdateAccountKey(int id, string key)
         {
-            AccountModel keyAlreadyInUse = _service.FindByKey(key);
+            AccountModel keyAlreadyInUse = _service.GetByKey(key);
 
             if (keyAlreadyInUse != null)
                 return Conflict(false);
@@ -39,7 +39,7 @@ namespace AB_INVEST.Controllers
         [HttpGet("userid/{userId}")]
         public ActionResult<AccountModel> GetByUserId(int userId)
         {
-            AccountModel account = _service.FindByUserId(userId);
+            AccountModel account = _service.GetByUserId(userId);
 
             if (account == null)
                 return NotFound("Conta não encontrada");

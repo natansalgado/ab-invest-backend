@@ -15,6 +15,7 @@ namespace AB_INVEST.Context
         public DbSet<UserModel> Users { get; set; }
         public DbSet<AccountModel> Accounts { get; set; }
         public DbSet<TransferModel> Transfers { get; set; }
+        public DbSet<DepositModel> Deposits { get; set; }
         public DbSet<InvestmentModel> Investments { get; set; }
         public DbSet<UserInvestmentModel> UsersInvestments { get; set; }
         public DbSet<WithdrawModel> Withdraws { get; set; }
@@ -24,6 +25,7 @@ namespace AB_INVEST.Context
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new AccountMap());
             modelBuilder.ApplyConfiguration(new TransferMap());
+            modelBuilder.ApplyConfiguration(new DepositMap());
             modelBuilder.ApplyConfiguration(new InvestmentMap());
             modelBuilder.ApplyConfiguration(new UserInvestmentMap());
             modelBuilder.ApplyConfiguration(new WithdrawMap());

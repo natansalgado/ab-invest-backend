@@ -18,17 +18,17 @@ namespace AB_INVEST.Repositories
             _context = context;
         }
 
-        public List<UserInvestmentModel> FindAll()
+        public List<UserInvestmentModel> GetAll()
         {
             return _context.UsersInvestments.Include(x => x.Investment).ToList();
         }
 
-        public UserInvestmentModel FindById(int id)
+        public UserInvestmentModel GetById(int id)
         {
             return _context.UsersInvestments.Include(x => x.Investment).FirstOrDefault(x => x.Id == id);
         }
 
-        public List<UserInvestmentModel> FindByAccountId(int accountId)
+        public List<UserInvestmentModel> GetByAccountId(int accountId)
         {
             return _context.UsersInvestments.Where(x => x.AccountId == accountId)
                 .OrderByDescending(x => x.StartDate).Include(x => x.Investment).ToList();

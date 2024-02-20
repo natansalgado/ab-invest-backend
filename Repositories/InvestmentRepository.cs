@@ -17,12 +17,12 @@ namespace AB_INVEST.Repositories
             _context = context;
         }
 
-        public List<InvestmentModel> FindAll()
+        public List<InvestmentModel> GetAll()
         {
             return _context.Investments.OrderBy(x => x.AnnualPercentage).ToList();
         }
 
-        public InvestmentModel FindById(int id)
+        public InvestmentModel GetById(int id)
         {
             return _context.Investments.Find(id);
         }
@@ -45,7 +45,7 @@ namespace AB_INVEST.Repositories
 
         public bool Delete(int id)
         {
-            InvestmentModel investmentById = FindById(id);
+            InvestmentModel investmentById = GetById(id);
 
             if (investmentById == null) return false;
 

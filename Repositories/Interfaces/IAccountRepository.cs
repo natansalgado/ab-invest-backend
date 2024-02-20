@@ -9,9 +9,9 @@ namespace AB_INVEST.Repositories.Interfaces
     public interface IAccountRepository
     {
         AccountModel Create(AccountModel account);
-        AccountModel FindById(int id);
-        AccountModel FindByKey(string key);
-        AccountModel FindByUserId(int userId);
+        AccountModel GetById(int id);
+        AccountModel GetByKey(string key);
+        AccountModel GetByUserId(int userId);
         bool AddToBalance(AccountModel account);
         bool RemoveFromBalance(AccountModel account);
         bool UpdateAccountKey(AccountModel account);

@@ -56,5 +56,15 @@ namespace AB_INVEST.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpPost("Deposit")]
+        public ActionResult<DepositModel> Deposit([FromBody] DepositDto depositDto)
+        {
+            DepositModel deposit = _service.Deposit(depositDto);
+
+            if (deposit == null) return NotFound("Conta não encontrada");
+
+            return Ok(deposit);
+        }
     }
 }

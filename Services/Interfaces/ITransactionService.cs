@@ -11,5 +11,6 @@ namespace AB_INVEST.Services.Interfaces
     {
         TransferConfirmDto CheckAccountToTransfer(TransferDto transferDto);
         TransferDoneDto Transfer(TransferDto transferDto);
+        DepositModel Deposit(DepositDto depositDto);
     }
 }

@@ -18,17 +18,17 @@ namespace AB_INVEST.Repositories
             _context = context;
         }
 
-        public AccountModel FindById(int id)
+        public AccountModel GetById(int id)
         {
             return _context.Accounts.Find(id);
         }
 
-        public AccountModel FindByUserId(int userId)
+        public AccountModel GetByUserId(int userId)
         {
             return _context.Accounts.Where(x => x.UserId == userId).FirstOrDefault();
         }
 
-        public AccountModel FindByKey(string key)
+        public AccountModel GetByKey(string key)
         {
             return _context.Accounts.Include(x => x.User).FirstOrDefault(x => x.AccountKey == key);
         }

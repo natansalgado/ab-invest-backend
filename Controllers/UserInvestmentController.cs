@@ -24,16 +24,16 @@ namespace AB_INVEST.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<UserInvestmentModel>> FindAll()
+        public ActionResult<List<UserInvestmentModel>> GetAll()
         {
-            List<UserInvestmentModel> userInvestments = _service.FindAll();
+            List<UserInvestmentModel> userInvestments = _service.GetAll();
             return Ok(userInvestments);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<List<UserInvestmentModel>> FindById(int id)
+        public ActionResult<List<UserInvestmentModel>> GetById(int id)
         {
-            UserInvestmentModel userInvestment = _service.FindById(id);
+            UserInvestmentModel userInvestment = _service.GetById(id);
 
             if (userInvestment == null)
                 return NotFound("Investimento do usuário não encontrado");
@@ -42,9 +42,9 @@ namespace AB_INVEST.Controllers
         }
 
         [HttpGet("Account/{id}")]
-        public ActionResult<List<UserInvestmentModel>> FindByAccountId(int id)
+        public ActionResult<List<UserInvestmentModel>> GetByAccountId(int id)
         {
-            List<UserInvestmentModel> accountInvestments = _service.FindByAccountId(id);
+            List<UserInvestmentModel> accountInvestments = _service.GetByAccountId(id);
 
             if (accountInvestments == null)
                 return NotFound("Conta não encontrada");

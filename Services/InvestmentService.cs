@@ -17,14 +17,14 @@ namespace AB_INVEST.Services
             _repository = repository;
         }
 
-        public List<InvestmentModel> FindAll()
+        public List<InvestmentModel> GetAll()
         {
-            return _repository.FindAll();
+            return _repository.GetAll();
         }
 
-        public InvestmentModel FindById(int id)
+        public InvestmentModel GetById(int id)
         {
-            return _repository.FindById(id);
+            return _repository.GetById(id);
         }
 
         public InvestmentModel Create(InvestmentModel investment)
@@ -34,7 +34,7 @@ namespace AB_INVEST.Services
 
         public InvestmentModel Update(int id, InvestmentModel investment)
         {
-            InvestmentModel investmentById = FindById(id);
+            InvestmentModel investmentById = GetById(id);
 
             if (investmentById == null) return null;
 

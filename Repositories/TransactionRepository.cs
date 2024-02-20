@@ -24,5 +24,13 @@ namespace AB_INVEST.Repositories
             
             return transfer;
         }
+
+        public DepositModel Deposit(DepositModel deposit)
+        {
+            _context.Deposits.Add(deposit);
+            _context.SaveChanges();
+
+            return deposit;
+        }
     }
 }

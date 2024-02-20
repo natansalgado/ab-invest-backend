@@ -20,7 +20,7 @@ namespace AB_INVEST.Jobs
 
         public Task Execute(IJobExecutionContext context)
         {
-            List<UserInvestmentModel> usersInvestments = _userInvestmentService.FindAll();
+            List<UserInvestmentModel> usersInvestments = _userInvestmentService.GetAll();
 
             foreach (var userInvestment in usersInvestments)
             {

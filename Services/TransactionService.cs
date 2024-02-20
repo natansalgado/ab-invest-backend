@@ -26,7 +26,7 @@ namespace AB_INVEST.Services
             if (transferDto.Value <= 0)
                 throw new ABException(400, "Valor de transferência inválido");
 
-            AccountModel account = _accountService.FindByKey(transferDto.ReceiverKey) ??
+            AccountModel account = _accountService.GetByKey(transferDto.ReceiverKey) ??
                 throw new ABException(404, "Conta de destino não encontrada");
 
             return new TransferConfirmDto()
@@ -45,8 +45,8 @@ namespace AB_INVEST.Services
 
             ValidateTransferInputs(senderKey, receiverKey, value);
 
-            AccountModel senderAccount = _accountService.FindByKey(senderKey);
-            AccountModel receiverAccount = _accountService.FindByKey(receiverKey);
+            AccountModel senderAccount = _accountService.GetByKey(senderKey);
+            AccountModel receiverAccount = _accountService.GetByKey(receiverKey);
 
             ValidateAccounts(senderAccount, receiverAccount, value);
 
@@ -63,6 +63,24 @@ namespace AB_INVEST.Services
             TransferModel transferDone = _repository.Transfer(transfer);
 
             return CreateTransferDoneDto(transferDone);
+        }
+
+        public DepositModel Deposit(DepositDto depositDto)
+        {
+            AccountModel account = _accountService.GetById(depositDto.AccountId);
+
+            if (account == null) return null;
+
+            DepositModel deposit = new()
+            {
+                AccountId = depositDto.AccountId,
+                Value = depositDto.Value,
+                PaymentMethod = depositDto.PaymentMethod
+            };
+
+            _accountService.AddToBalance(depositDto.AccountId, depositDto.Value);
+
+            return _repository.Deposit(deposit);
         }
 
         private static TransferDoneDto CreateTransferDoneDto(TransferModel transfer)

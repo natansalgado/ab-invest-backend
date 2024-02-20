@@ -20,16 +20,16 @@ namespace AB_INVEST.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<InvestmentModel>> FindAll()
+        public ActionResult<List<InvestmentModel>> GetAll()
         {
-            List<InvestmentModel> investments = _service.FindAll();
+            List<InvestmentModel> investments = _service.GetAll();
             return Ok(investments);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<InvestmentModel> FindById(int id)
+        public ActionResult<InvestmentModel> GetById(int id)
         {
-            InvestmentModel investment = _service.FindById(id);
+            InvestmentModel investment = _service.GetById(id);
 
             if (investment == null)
                 return NotFound("Investimento não encontrado");

@@ -17,19 +17,19 @@ namespace AB_INVEST.Services
             _repository = repository;
         }
 
-        public AccountModel FindById(int id)
+        public AccountModel GetById(int id)
         {
-            return _repository.FindById(id);
+            return _repository.GetById(id);
         }
 
-        public AccountModel FindByUserId(int userId)
+        public AccountModel GetByUserId(int userId)
         {
-            return _repository.FindByUserId(userId);
+            return _repository.GetByUserId(userId);
         }
 
-        public AccountModel FindByKey(string key)
+        public AccountModel GetByKey(string key)
         {
-            return _repository.FindByKey(key);
+            return _repository.GetByKey(key);
         }
 
         public void Create(int userId)
@@ -45,7 +45,7 @@ namespace AB_INVEST.Services
 
         public bool UpdateAccountKey(int id, string key)
         {
-            AccountModel account = FindById(id);
+            AccountModel account = GetById(id);
 
             account.AccountKey = key;
 
@@ -56,7 +56,7 @@ namespace AB_INVEST.Services
 
         public bool AddToBalance(int id, decimal value)
         {
-            AccountModel account = FindById(id);
+            AccountModel account = GetById(id);
 
             if (account == null) return false;
 
@@ -67,7 +67,7 @@ namespace AB_INVEST.Services
 
         public bool RemoveFromBalance(int id, decimal value)
         {
-            AccountModel account = FindById(id);
+            AccountModel account = GetById(id);
 
             if (account == null) return false;
 

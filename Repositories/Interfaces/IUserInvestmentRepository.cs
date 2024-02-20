@@ -8,9 +8,9 @@ namespace AB_INVEST.Repositories.Interfaces
 {
     public interface IUserInvestmentRepository
     {
-        List<UserInvestmentModel> FindAll();
-        UserInvestmentModel FindById(int id);
-        List<UserInvestmentModel> FindByAccountId(int accountId);
+        List<UserInvestmentModel> GetAll();
+        UserInvestmentModel GetById(int id);
+        List<UserInvestmentModel> GetByAccountId(int accountId);
         UserInvestmentModel CreateUserInvestment(UserInvestmentModel userInvestment);
         WithdrawModel CreateWithdraw(WithdrawModel withdrawModel);
         UserInvestmentModel Update(UserInvestmentModel userInvestment);

@@ -4,6 +4,7 @@ using AB_INVEST.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AB_INVEST.Migrations
 {
     [DbContext(typeof(ABInvestContext))]
-    partial class ABInvestContextModelSnapshot : ModelSnapshot
+    [Migration("20240220134004_CreateDepositTable")]
+    partial class CreateDepositTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,36 +53,6 @@ namespace AB_INVEST.Migrations
                         .IsUnique();
 
                     b.ToTable("Accounts");
-                });
-
-            modelBuilder.Entity("AB_INVEST.Models.DepositModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 2, 20, 10, 42, 12, 292, DateTimeKind.Local).AddTicks(2442));
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Value")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("Deposits");
                 });
 
             modelBuilder.Entity("AB_INVEST.Models.InvestmentModel", b =>
@@ -277,17 +249,6 @@ namespace AB_INVEST.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("AB_INVEST.Models.DepositModel", b =>
-                {
-                    b.HasOne("AB_INVEST.Models.AccountModel", "Account")
-                        .WithMany()
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("AB_INVEST.Models.TransferModel", b =>

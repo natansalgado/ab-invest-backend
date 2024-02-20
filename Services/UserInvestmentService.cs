@@ -23,30 +23,30 @@ namespace AB_INVEST.Services
             _investmentService = investmentService;
         }
 
-        public List<UserInvestmentModel> FindAll()
+        public List<UserInvestmentModel> GetAll()
         {
-            return _repository.FindAll();
+            return _repository.GetAll();
         }
 
-        public UserInvestmentModel FindById(int id)
+        public UserInvestmentModel GetById(int id)
         {
-            return _repository.FindById(id);
+            return _repository.GetById(id);
         }
 
-        public List<UserInvestmentModel> FindByAccountId(int accountId)
+        public List<UserInvestmentModel> GetByAccountId(int accountId)
         {
-            AccountModel account = _accountService.FindById(accountId);
+            AccountModel account = _accountService.GetById(accountId);
 
             if (account == null)
                 return null;
 
-            return _repository.FindByAccountId(accountId);
+            return _repository.GetByAccountId(accountId);
         }
 
         public UserInvestmentModel Create(UserInvestmentDto userInvestmentDto)
         {
-            AccountModel account = _accountService.FindById(userInvestmentDto.AccountId);
-            InvestmentModel investment = _investmentService.FindById(userInvestmentDto.InvestmentId);
+            AccountModel account = _accountService.GetById(userInvestmentDto.AccountId);
+            InvestmentModel investment = _investmentService.GetById(userInvestmentDto.InvestmentId);
 
             CheckCreate(account, investment, userInvestmentDto);
 
@@ -62,10 +62,10 @@ namespace AB_INVEST.Services
 
         public UserInvestmentModel AddBalance(int id, decimal value)
         {
-            UserInvestmentModel userInvestment = FindById(id)
+            UserInvestmentModel userInvestment = GetById(id)
                 ?? throw new ABException(404, "Não foi possível encontrar seu investimento");
             
-            AccountModel account = _accountService.FindById(userInvestment.AccountId)
+            AccountModel account = _accountService.GetById(userInvestment.AccountId)
                 ?? throw new ABException(404, "Não foi possível encontrar sua conta bancária");
             
             if (account.Balance < value) throw new ABException(400, "Saldo insuficiente");
@@ -77,7 +77,7 @@ namespace AB_INVEST.Services
 
         public UserInvestmentModel Update(int id, UserInvestmentModel userInvestment)
         {
-            UserInvestmentModel userInvestmentById = FindById(id);
+            UserInvestmentModel userInvestmentById = GetById(id);
 
             if (userInvestmentById == null)
                 return null;
@@ -89,7 +89,7 @@ namespace AB_INVEST.Services
 
         public WithdrawModel WithDraw(int id, decimal? value)
         {
-            UserInvestmentModel userInvestment = FindById(id);
+            UserInvestmentModel userInvestment = GetById(id);
 
             CheckWithDraw(userInvestment);
 
@@ -110,7 +110,7 @@ namespace AB_INVEST.Services
                                         InvestmentModel investment,
                                         UserInvestmentDto userInvestmentDto)
         {
-            List<UserInvestmentModel> userInvestments = _repository.FindByAccountId(account.Id);
+            List<UserInvestmentModel> userInvestments = _repository.GetByAccountId(account.Id);
             UserInvestmentModel reapetedUserInvestment = userInvestments.Find(x => x.Name == userInvestmentDto.Name);
 
             if (reapetedUserInvestment != null)
@@ -131,7 +131,7 @@ namespace AB_INVEST.Services
 
         private void CheckWithDraw(UserInvestmentModel userInvestment)
         {
-            AccountModel account = _accountService.FindById(userInvestment.AccountId);
+            AccountModel account = _accountService.GetById(userInvestment.AccountId);
 
             if (account == null)
                 throw new ABException(404, "Conta não encontrada");

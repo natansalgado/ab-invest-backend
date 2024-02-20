@@ -9,9 +9,9 @@ namespace AB_INVEST.Services.Interfaces
 {
     public interface IUserInvestmentService
     {
-        List<UserInvestmentModel> FindAll();
-        UserInvestmentModel FindById(int id);
-        List<UserInvestmentModel> FindByAccountId(int accountId);
+        List<UserInvestmentModel> GetAll();
+        UserInvestmentModel GetById(int id);
+        List<UserInvestmentModel> GetByAccountId(int accountId);
         UserInvestmentModel Create(UserInvestmentDto userInvestmentDto);
         UserInvestmentModel AddBalance(int id, decimal value);
         UserInvestmentModel Update(int id, UserInvestmentModel userInvestmentModel);

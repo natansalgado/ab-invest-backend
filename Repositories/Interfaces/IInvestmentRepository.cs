@@ -8,8 +8,8 @@ namespace AB_INVEST.Repositories.Interfaces
 {
     public interface IInvestmentRepository
     {
-        List<InvestmentModel> FindAll();
-        InvestmentModel FindById(int id);
+        List<InvestmentModel> GetAll();
+        InvestmentModel GetById(int id);
         InvestmentModel Create(InvestmentModel investment);
         InvestmentModel Update(InvestmentModel investmentById);
         bool Delete(int id);
