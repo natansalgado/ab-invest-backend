@@ -11,7 +11,7 @@ namespace AB_INVEST.Repositories.Interfaces
         List<InvestmentModel> FindAll();
         InvestmentModel FindById(int id);
         InvestmentModel Create(InvestmentModel investment);
-        InvestmentModel Update(int id, InvestmentModel investment);
+        InvestmentModel Update(InvestmentModel investmentById);
         bool Delete(int id);
     }
 }

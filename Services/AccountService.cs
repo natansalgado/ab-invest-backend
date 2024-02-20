@@ -45,22 +45,35 @@ namespace AB_INVEST.Services
 
         public bool UpdateAccountKey(int id, string key)
         {
-            AccountModel accountExists = _repository.FindById(id);
+            AccountModel account = FindById(id);
 
-            if (accountExists == null)
-                return false;
+            account.AccountKey = key;
 
-            return _repository.UpdateAccountKey(id, key);
+            if (account == null) return false;
+
+            return _repository.UpdateAccountKey(account);
         }
 
         public bool AddToBalance(int id, decimal value)
         {
-            return _repository.AddToBalance(id, value);
+            AccountModel account = FindById(id);
+
+            if (account == null) return false;
+
+            account.Balance += value;
+
+            return _repository.AddToBalance(account);
         }
 
         public bool RemoveFromBalance(int id, decimal value)
         {
-            return _repository.RemoveFromBalance(id, value);
+            AccountModel account = FindById(id);
+
+            if (account == null) return false;
+
+            account.Balance -= value;
+
+            return _repository.RemoveFromBalance(account);
         }
     }
 }

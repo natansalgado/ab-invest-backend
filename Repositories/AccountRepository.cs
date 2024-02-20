@@ -41,36 +41,26 @@ namespace AB_INVEST.Repositories
             return account;
         }
 
-        public bool UpdateAccountKey(int id, string key)
+        public bool UpdateAccountKey(AccountModel account)
         {
-            AccountModel account = FindById(id);
-
-            account.AccountKey = key;
-
             _context.Accounts.Update(account);
             _context.SaveChanges();
 
             return true;
         }
 
-        public bool AddToBalance(int id, decimal value)
+        public bool AddToBalance(AccountModel account)
         {
-            AccountModel account = FindById(id);
-
-            account.Balance += value;
-
             _context.Accounts.Update(account);
+            _context.SaveChanges();
 
             return true;
         }
 
-        public bool RemoveFromBalance(int id, decimal value)
+        public bool RemoveFromBalance(AccountModel account)
         {
-            AccountModel account = FindById(id);
-
-            account.Balance -= value;
-
             _context.Accounts.Update(account);
+            _context.SaveChanges();
 
             return true;
         }

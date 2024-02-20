@@ -34,7 +34,16 @@ namespace AB_INVEST.Services
 
         public InvestmentModel Update(int id, InvestmentModel investment)
         {
-            return _repository.Update(id, investment);
+            InvestmentModel investmentById = FindById(id);
+
+            if (investmentById == null) return null;
+
+            if (investmentById.Name != null) investmentById.Name = investment.Name;
+            if (investmentById.MinValue != 0) investmentById.MinValue = investment.MinValue;
+            if (investmentById.MinMonths != 0) investmentById.MinMonths = investment.MinMonths;
+            if (investmentById.AnnualPercentage != 0) investmentById.AnnualPercentage = investment.AnnualPercentage;
+
+            return _repository.Update(investment);
         }
 
         public bool Delete(int id)

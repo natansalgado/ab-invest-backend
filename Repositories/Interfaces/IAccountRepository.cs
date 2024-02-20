@@ -12,8 +12,8 @@ namespace AB_INVEST.Repositories.Interfaces
         AccountModel FindById(int id);
         AccountModel FindByKey(string key);
         AccountModel FindByUserId(int userId);
-        bool AddToBalance(int id, decimal value);
-        bool RemoveFromBalance(int id, decimal value);
-        bool UpdateAccountKey(int id, string key);
+        bool AddToBalance(AccountModel account);
+        bool RemoveFromBalance(AccountModel account);
+        bool UpdateAccountKey(AccountModel account);
     }
 }

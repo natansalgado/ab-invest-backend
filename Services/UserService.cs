@@ -55,16 +55,33 @@ namespace AB_INVEST.Services
 
         public UserDto Update(int id, UserModel user)
         {
+            UserModel userById = _repository.GetById(id);
+
+            if (userById == null)
+            {
+                return null;
+            }
+
+            if (user.Name != null) userById.Name = user.Name;
+            if (user.Email != null) userById.Email = user.Email.ToLower();
+            if (user.Phone != null) userById.Phone = user.Phone;
+            if (user.Password != null) userById.Password = user.Password;
+            if (user.Role != null) userById.Role = user.Role;
+
             user.Password = _passwordHashService.HashPassword(user.Password);
 
-            UserDto userDto = _mappingService.ModelToDto(_repository.Update(id, user));
+            UserDto userDto = _mappingService.ModelToDto(_repository.Update(user));
 
             return userDto;
         }
 
         public bool Delete(int id)
         {
-            return _repository.Delete(id);
+            UserModel userById = _repository.GetById(id);
+
+            if (userById == null) return false;
+
+            return _repository.Delete(userById);
         }
 
         public bool EmailAlreadyInUse(string email)

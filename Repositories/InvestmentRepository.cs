@@ -35,18 +35,8 @@ namespace AB_INVEST.Repositories
             return investment;
         }
 
-        public InvestmentModel Update(int id, InvestmentModel investment)
+        public InvestmentModel Update(InvestmentModel investmentById)
         {
-            InvestmentModel investmentById = FindById(id);
-
-            if (investmentById == null)
-                return null;
-
-            if (investmentById.Name != null) investmentById.Name = investment.Name;
-            if (investmentById.MinValue != 0) investmentById.MinValue = investment.MinValue;
-            if (investmentById.MinMonths != 0) investmentById.MinMonths = investment.MinMonths;
-            if (investmentById.AnnualPercentage != 0) investmentById.AnnualPercentage = investment.AnnualPercentage;
-
             _context.Investments.Update(investmentById);
             _context.SaveChanges();
 
@@ -57,8 +47,7 @@ namespace AB_INVEST.Repositories
         {
             InvestmentModel investmentById = FindById(id);
 
-            if (investmentById == null)
-                return false;
+            if (investmentById == null) return false;
 
             _context.Remove(investmentById);
             _context.SaveChanges();
