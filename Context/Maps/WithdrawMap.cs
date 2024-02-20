@@ -16,7 +16,6 @@ namespace AB_INVEST.Context.Maps
 
             builder.Property(x => x.InitialValue).HasColumnType("decimal(18,2)").IsRequired();
             builder.Property(x => x.Balance).HasColumnType("decimal(18,2)").IsRequired();
-            builder.Property(x => x.WithdrewAll).IsRequired();
             builder.Property(x => x.WithdrewValue).IsRequired();
             builder.Property(x => x.AccountId).IsRequired();
             builder.Property(x => x.InvestmentId).IsRequired();

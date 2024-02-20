@@ -87,15 +87,13 @@ namespace AB_INVEST.Services
             return _repository.Update(userInvestmentById);
         }
 
-        public WithdrawModel WithDraw(int id, decimal? value)
+        public WithdrawModel WithDraw(int id, decimal value)
         {
             UserInvestmentModel userInvestment = GetById(id);
 
             CheckWithDraw(userInvestment);
 
-            decimal withdrewValue = (decimal)(value != null ? value : userInvestment.Balance);
-
-            WithdrawModel withdrawModel = ConvertToWithdraw(userInvestment, withdrewValue, value == null);
+            WithdrawModel withdrawModel = ConvertToWithdraw(userInvestment, value);
 
             WithdrawModel withdraw = _repository.CreateWithdraw(withdrawModel);
 
@@ -154,7 +152,7 @@ namespace AB_INVEST.Services
             };
         }
 
-        private static WithdrawModel ConvertToWithdraw(UserInvestmentModel userInvestment, decimal withdreValue, bool withdrawAll)
+        private static WithdrawModel ConvertToWithdraw(UserInvestmentModel userInvestment, decimal withdreValue)
         {
             return new WithdrawModel()
             {
@@ -162,7 +160,6 @@ namespace AB_INVEST.Services
                 InvestmentId = userInvestment.InvestmentId,
                 InitialValue = userInvestment.InitialValue,
                 Balance = userInvestment.Balance,
-                WithdrewAll = withdrawAll,
                 WithdrewValue = withdreValue,
                 StartDate = userInvestment.StartDate,
                 EndDate = userInvestment.EndDate,

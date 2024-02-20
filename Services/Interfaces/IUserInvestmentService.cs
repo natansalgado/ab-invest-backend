@@ -15,6 +15,6 @@ namespace AB_INVEST.Services.Interfaces
         UserInvestmentModel Create(UserInvestmentDto userInvestmentDto);
         UserInvestmentModel AddBalance(int id, decimal value);
         UserInvestmentModel Update(int id, UserInvestmentModel userInvestmentModel);
-        WithdrawModel WithDraw(int id, decimal? value);
+        WithdrawModel WithDraw(int id, decimal value);
     }
 }
