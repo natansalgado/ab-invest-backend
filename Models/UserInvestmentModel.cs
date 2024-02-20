@@ -11,6 +11,7 @@ namespace AB_INVEST.Models
         public string Name { get; set; }
         public decimal InitialValue { get; set; }
         public decimal Balance { get; set; }
+        public decimal AddedValue { get; set; }
         public int AccountId { get; set; }
         public int InvestmentId { get; set; }
         public DateTime StartDate { get; set; }

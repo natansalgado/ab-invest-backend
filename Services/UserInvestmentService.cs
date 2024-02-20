@@ -71,7 +71,10 @@ namespace AB_INVEST.Services
             if (account.Balance < value) throw new ABException(400, "Saldo insuficiente");
 
             _accountService.RemoveFromBalance(userInvestment.AccountId, value);
+
+            userInvestment.AddedValue += value;
             userInvestment.Balance += value;
+
             return _repository.Update(userInvestment);
         }
 
